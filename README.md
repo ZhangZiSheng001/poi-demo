@@ -1,13 +1,13 @@
 # 简介
 
-Apache POI是一套基于 OOXML 标准（Office Open XML）和 OLE2 标准来读写各种格式文件的 Java API，也就是说只要是遵循以上标准的文件，POI 都能够进行读写，而不仅仅只能操作我们熟知的办公程序文件。本文只会涉及到 excel 相关内容，其他文件的操作可以参考[poi官方网站]( https://poi.apache.org/components )。
+Apache POI是一套基于 **OOXML 标准**（Office Open XML）和 **OLE2 标准**来读写各种格式文件的 Java API，也就是说只要是遵循以上标准的文件，POI 都能够进行读写，而不仅仅只能操作我们熟知的办公程序文件。本文只会涉及到 excel 相关内容，其他文件的操作可以参考[poi官方网站]( https://poi.apache.org/components )。
 
 这里先总结下 POI 的使用体验。POI 面向接口的设计非常巧妙，使用 `ss.usermodel` 包读写 xls 和 xlsx 时，可以使用同一套代码，即使这两种文件格式采用的是完全不同的标准。POI 提供了`SXSSFWorkbook`用于解决 xlsx 写大文件时容易出现的 OOM 问题。但是，还是存在以下不足（都只针对读场景）：
 
-1. **使用 ss.usermodel 包解析 excel 时比较占内存，容易出现 OOM**。类似于 xml 中的 DOM，这种方式会在内存中构建整个文档的结构，在处理大文件时容易出现 OOM。然而，**大部分场景我们并不需要随机地去访问 excel 中的节点**。
-2. **POI 提供的 SAX API 太过复杂**。为了解决第一个问题，POI 提供了基于事件驱动的 SAX 方式，这种方式内存占用小、效率高， 但是 API 太过繁琐，开发者必须在熟知文档规范的前提下才能使用，而且 xls 和 xlsx 使用的是完全不同的两套 API，实际项目中必须针对不同文件类型分别实现。这一点可以从本文的例子看出来。
+1. **使用 ss.usermodel 包解析 excel 效率较低、内存占用较大，且容易出现 OOM**。类似于 xml 中的 DOM，这种方式会在内存中构建整个文档的结构，在处理大文件时容易出现 OOM。然而，**大部分场景我们并不需要随机地去访问 excel 中的节点**。
+2. **POI 提供的 SAX 解析可以解决第一个问题，但是 API 太过复杂**。为了解决第一个问题，POI 提供了基于事件驱动的 SAX 方式，这种方式内存占用小、效率高， 但是 API 太过繁琐，**开发者必须在熟知文档规范的前提下才能使用**，而且 xls 和 xlsx 使用的是完全不同的两套 API，实际项目中必须针对不同文件类型分别实现。这一点可以从本文的例子看出来。
 
-针对以上问题，阿里的 easyexcel 对 POI 进行高级封装，简化了 SAX 部分 API 的使用，读 excel 时只采用 SAX 方式，从而避免出现 OOM，并且重写了 POI 对 xlsx 的解析，能够原本一个3M的 excel 用 POI SAX 依然需要100M左右内存降低到几M。
+针对以上问题，阿里的 easyexcel 对 POI 进行高级封装，提供了一套非常简便的 API，其中，读部分只封装了 SAX 部分 API，事实上，使用 easyexcel 读 excel 只会采用 SAX 方式，另外，easyexcel 重写了 POI 对 xlsx 的解析，能够原本一个3M的 excel 用 POI SAX 依然需要100M左右内存降低到几M，easyexcel 的内容本文也会涉及到。
 
 ## 什么是 OLE2 和 OOXML
 
@@ -107,7 +107,7 @@ mysql：5.7.28
 
 ### 编写测试方法
 
-建议采用`WorkbookFactory`来获取`Workbook`实例，而不是根据文件类型写死具体的实现类。
+建议采用`WorkbookFactory`来获取`Workbook`实例，而不是根据文件类型写死具体的实现类。另外，获取单元格对象时建议采用 `SheetUtil`获取，里面会对行对象进行判空操作。
 
 ```java
 	@Test
@@ -128,6 +128,9 @@ mysql：5.7.28
 
 		// 获取单元格
 		Cell cell = row.getCell(0);
+        
+        // 也可以采用以下方式获取单元格
+		// Cell cell = SheetUtil.getCell(sheet, 0, 0);
 
 		// 获取单元格内容
 		String value = cell.getStringCellValue();
@@ -148,7 +151,7 @@ mysql：5.7.28
 
 ### 需求
 
-生成一个 excel 文件，并给第一个单元格赋值为"测试"。
+生成一个 excel 文件，并给第一个单元格赋值为"测试"，并设置列宽 26，行高 20.25，内容居中，下框线，单元格橙色填充。
 
 ### 编写测试方法
 
@@ -677,7 +680,131 @@ POI 针对 xlsx 的 SAX API 也是非常繁琐，属于非常低级的封装，�
 
 <img src="D:\growUp\git_repository\09-poi-demo\extend\img\ReadTest03.png" alt="ReadTest03" style="zoom:80%;" />
 
+# 使用easyexcel读写excel
+
+通过以上例子，我们会发现，POI SAX 方式的 API 确实非常繁琐，使用时我必须熟悉地掌握 OLE2 或 OOXML 的规范，才能够使用。这是比较低层级的封装。相比之下，ss.usermodel 的 API 要好用很多，但是这套 API 底层解析 方式有点类似 DOM，效率较低，且内存占用较大。
+
+前面已经讲过，easyexcel 对 POI 进行了高级封装，极大地方便了我们读写 excel，而且只会采用 SAX 这种更快的方式来读取，下面补充下如何使用 easyexcel 读写 excel。
+
+## 创建实体
+
+使用 easyexcel 读写 excel 时，我们不需要自己写 row => entity 或者 entity => row 的方法，只要按照以下注解好就行。被`@ExcelProperty`注解的属性对应 row 中的具体内容，而被`@ExcelIgnore`注解表示不需要与 row 进行转换。
+
+```java
+@ContentRowHeight(16)
+public class UserDTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	@ExcelIgnore
+	private String id;
+
+	/**
+	 * <p>用户名</p>
+	 */
+	@ExcelProperty(value = { "用户名" }, index = 1)
+	private String name;
+
+	/**
+	 * <p>性别</p>
+	 */
+	@ExcelProperty(value = { "性别" }, index = 2)
+	private String genderStr;
+
+	/**
+	 * <p>年龄</p>
+	 */
+	@ExcelProperty(value = { "年龄" }, index = 3)
+	private Integer age;
+
+	/**
+	 * <p>电话号码</p>
+	 */
+	@ExcelProperty(value = { "手机号" }, index = 4)
+	@ColumnWidth(14)
+	private String phone;
+	
+	@ExcelIgnore
+	private Integer gender = 0;
+    
+    // 以下省略setter/getter方法
+}
+```
+
+## 批量导入excel 数据到数据库
+
+easyexcel 封装或重写了 POI SAX 部分的 API，所以也是需要设置回调的监听器，以下方式会采用默认的监听器，并返回封装好的对象。
+
+```java
+	@Test
+	public void test02() throws SQLException, IOException {
+		// XSSF
+		String path = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data.xlsx";
+		// HSSF
+		// String path = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data.xls";
+
+		// 读取excel
+		List<UserDTO> list = EasyExcel.read(path).head(UserDTO.class).sheet(0).headRowNumber(2).doReadSync();
+		// 保存
+		new UserService().save(list);
+	}
+```
+
+当然，我们也可以采用自定义的监听器，如下：
+
+```java
+	@Test
+	public void test01() throws SQLException, IOException {
+		// XSSF
+		String path = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data.xlsx";
+		
+		// HSSF
+		// String path = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data.xls";
+
+		List<UserDTO> list = new ArrayList<UserDTO>();
+		
+		// 定义回调监听器
+		ReadListener<UserDTO> syncReadListener = new AnalysisEventListener<UserDTO>() {
+			@Override
+			public void invoke(UserDTO data, AnalysisContext context) {
+				list.add(data);
+			}
+
+			@Override
+			public void doAfterAllAnalysed(AnalysisContext context) {
+				// TODO Auto-generated method stub
+			}
+		};
+		// 读取excel
+		EasyExcel.read(path, UserDTO.class, syncReadListener).sheet(0).headRowNumber(2).doRead();
+		// 保存
+		new UserService().save(list);
+	}
+```
+
+## 批量导出数据库数据到excel
+
+和读一样，这里也只用了一行代码就完成了对 excel 的操作。
+
+```java
+	@Test
+	public void test01() throws SQLException, IOException {
+		// XSSF
+		String path = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data.xlsx";
+
+		// HSSF
+		// String path = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data.xls";
+
+		// 获取用户数据
+		List<UserDTO> list = new UserService().findAll().stream().map((x) -> new UserDTO(x)).collect(Collectors.toList());
+		// 写入excel
+		EasyExcel.write(path, UserDTO.class).sheet(0).relativeHeadRowIndex(1).doWrite(list);
+	}
+```
+
 # 源码分析
+
+待更新。
 
 
 # 参考资料

@@ -44,6 +44,9 @@ public class ReadTest {
 
 		// 获取单元格
 		Cell cell = row.getCell(0);
+		
+		// 也可以采用以下方式获取单元格
+		// Cell cell = SheetUtil.getCell(sheet, 0, 0);
 
 		// 获取单元格内容
 		String value = cell.getStringCellValue();

@@ -24,7 +24,7 @@ import cn.zzs.poi.UserService;
 public class WriteTest {
 
 	/**
-	 * <p>批量写入用户数据到excel--不使用模板</p>
+	 * <p>批量写入用户数据到excel</p>
 	 * @throws SQLException 
 	 * @throws IOException 
 	 */
@@ -42,35 +42,4 @@ public class WriteTest {
 		EasyExcel.write(path, UserDTO.class).sheet(0).relativeHeadRowIndex(1).doWrite(list);
 	}
 	
-	
-	/**
-	 * <p>批量写入用户数据到excel--使用模板</p>
-	 * @throws SQLException 
-	 * @throws IOException 
-	 */
-	@Test
-	public void test02() throws SQLException, IOException {
-		// XSSF
-		String templatePath = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data_template.xlsx";
-		String path = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data.xlsx";
-		
-		InputStream in = new FileInputStream(templatePath);
-
-		// 创建工作簿
-		Workbook wb = WorkbookFactory.create(in);
-		
-		// HSSF
-		// String templatePath = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data_template.xls";
-		// String path = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data.xls";
-
-		// 获取用户数据
-		List<UserDTO> list = new UserService().findAll().stream().map((x) -> new UserDTO(x)).collect(Collectors.toList());
-		// 写入excel
-		EasyExcel.write(path, UserDTO.class).sheet(0).doWrite(list);
-		in.close();
-		wb.close();
-	}
-	
-	
-
 }
