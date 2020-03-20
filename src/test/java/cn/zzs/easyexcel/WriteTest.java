@@ -1,14 +1,10 @@
 package cn.zzs.easyexcel;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.junit.Test;
 
 import com.alibaba.excel.EasyExcel;
