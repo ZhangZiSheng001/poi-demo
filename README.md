@@ -1,3 +1,43 @@
+# 目录
+
+* [简介](#简介)
+  * [什么是 OLE2 和 OOXML](#什么是-ole2-和-ooxml)
+  * [POI的组件](#poi的组件)
+* [怎么使用POI](#怎么使用poi)
+  * [工程环境](#工程环境)
+  * [创建项目](#创建项目)
+  * [引入依赖](#引入依赖)
+  * [读excel--入门案例](#读excel--入门案例)
+    * [需求](#需求)
+    * [编写测试方法](#编写测试方法)
+    * [测试](#测试)
+  * [写excel--入门案例](#写excel--入门案例)
+    * [需求](#需求-1)
+    * [编写测试方法](#编写测试方法-1)
+    * [测试](#测试-1)
+  * [读excel--批量导入excel数据到数据库](#读excel--批量导入excel数据到数据库)
+    * [需求](#需求-2)
+    * [编写测试方法](#编写测试方法-2)
+    * [测试](#测试-2)
+  * [写excel--批量导出数据库数据到excel](#写excel--批量导出数据库数据到excel)
+    * [需求](#需求-3)
+    * [编写测试方法](#编写测试方法-3)
+    * [测试](#测试-3)
+  * [读xls--使用SAX方式](#读xls--使用sax方式)
+    * [需求](#需求-4)
+    * [编写测试方法](#编写测试方法-4)
+    * [测试](#测试-4)
+  * [读xlsx--使用SAX方式](#读xlsx--使用sax方式)
+    * [需求](#需求-5)
+    * [编写测试方法](#编写测试方法-5)
+    * [测试](#测试-5)
+* [使用easyexcel读写excel](#使用easyexcel读写excel)
+  * [创建实体](#创建实体)
+  * [批量导入excel 数据到数据库](#批量导入excel-数据到数据库)
+  * [批量导出数据库数据到excel](#批量导出数据库数据到excel)
+* [参考资料](#参考资料)
+
+
 # 简介
 
 Apache POI是一套基于 **OOXML 标准**（Office Open XML）和 **OLE2 标准**来读写各种格式文件的 Java API，也就是说只要是遵循以上标准的文件，POI 都能够进行读写，而不仅仅只能操作我们熟知的办公程序文件。本文只会涉及到 excel 相关内容，其他文件的操作可以参考[poi官方网站]( https://poi.apache.org/components )。
@@ -17,7 +57,7 @@ OLE2 文件一般包括 xls、doc、ppt 等，是二进制格式的文件。 相
 
 OOXML文件一般包括 xlsx、docx、pptx 等。该类文件以指定格式的 xml 为基础并以 zip 格式压缩，这里我利用解压工具解压本地的一个 xml 文件，可以看到以下文件结构，在本文例子中，我们会重点关注 sharedStrings.xml 和 sheet1.xml 的内容，因为使用 SAX API 时必须用到：
 
-<img src="D:\growUp\git_repository\09-poi-demo\extend\img\xlsx文件结构.png" alt="xlsx文件结构" style="zoom:80%;" />
+<img src="https://img2020.cnblogs.com/blog/1731892/202003/1731892-20200320152401357-788307119.png" alt="xlsx文件结构" style="zoom:80%;" />
 
 ## POI的组件
 
@@ -145,7 +185,7 @@ mysql：5.7.28
 
 运行以上方法，控制台打印出第一个单元格的内容：
 
-<img src="D:\growUp\git_repository\09-poi-demo\extend\img\ReadTest01.png" alt='ReadTest01' style="zoom: 80%;" />
+<img src="https://img2020.cnblogs.com/blog/1731892/202003/1731892-20200320152544335-1212223674.png" alt='ReadTest01' style="zoom: 80%;" />
 
 ## 写excel--入门案例
 
@@ -206,7 +246,7 @@ mysql：5.7.28
 
 运行以上方法，指定路径下生成了 excel 文件，并填充了第一个单元格：
 
-<img src="D:\growUp\git_repository\09-poi-demo\extend\img\WriteTest01.png" alt="WriteTest01" style="zoom: 67%;" />
+<img src="https://img2020.cnblogs.com/blog/1731892/202003/1731892-20200320152622177-1166058297.png" alt="WriteTest01" style="zoom: 67%;" />
 
 ## 读excel--批量导入excel数据到数据库
 
@@ -214,7 +254,7 @@ mysql：5.7.28
 
 将 excel 中的用户数据导入到数据库（sql 已提供，在当前项目的 extend/sql 下），数据格式如下：
 
-<img src="D:\growUp\git_repository\09-poi-demo\extend\img\ReadTest02.png" alt="ReadTest02" style="zoom:67%;" />
+<img src="https://img2020.cnblogs.com/blog/1731892/202003/1731892-20200320152652801-636233945.png" alt="ReadTest02" style="zoom:67%;" />
 
 该文件总计1000条数据，xls 大小 128 KB，xlsx 大小 40 KB，两种类型文件内容一致。
 
@@ -289,7 +329,7 @@ mysql：5.7.28
 
 运行以上方法，可以在数据库看到导入的数据：
 
-<img src="D:\growUp\git_repository\09-poi-demo\extend\img\ReadTest03.png" alt="ReadTest03" style="zoom:80%;" />
+<img src="https://img2020.cnblogs.com/blog/1731892/202003/1731892-20200320152719395-1088281705.png" alt="ReadTest03" style="zoom:80%;" />
 
 ## 写excel--批量导出数据库数据到excel
 
@@ -297,7 +337,7 @@ mysql：5.7.28
 
 将数据库的用户数据导出到excel中。这个例子使用模板进行导出，模板如下（如果是 xlsx 的大文件，为了能够使用`SXSSFWorkbook`最好不要用模板）。
 
-<img src="D:\growUp\git_repository\09-poi-demo\extend\img\WriteTest02.png" alt="WriteTest02" style="zoom:80%;" />
+<img src="https://img2020.cnblogs.com/blog/1731892/202003/1731892-20200320152843240-683399166.png" alt="WriteTest02" style="zoom:80%;" />
 
 ### 编写测试方法
 
@@ -392,7 +432,7 @@ mysql：5.7.28
 
 运行以上方法，在指定文件夹可以看到生成的文件：
 
-<img src="D:\growUp\git_repository\09-poi-demo\extend\img\WriteTest03.png" alt="WriteTest03" style="zoom:67%;" />
+<img src="https://img2020.cnblogs.com/blog/1731892/202003/1731892-20200320152908168-1445688494.png" alt="WriteTest03" style="zoom:67%;" />
 
 ## 读xls--使用SAX方式
 
@@ -517,7 +557,7 @@ mysql：5.7.28
 
 运行以上方法，可以在数据库看到导入的数据：
 
-<img src="D:\growUp\git_repository\09-poi-demo\extend\img\ReadTest03.png" alt="ReadTest03" style="zoom:80%;" />
+<img src="https://img2020.cnblogs.com/blog/1731892/202003/1731892-20200320152719395-1088281705.png" alt="ReadTest03" style="zoom:80%;" />
 
 ## 读xlsx--使用SAX方式
 
@@ -678,7 +718,7 @@ POI 针对 xlsx 的 SAX API 也是非常繁琐，属于非常低级的封装，�
 
 运行以上方法，可以在数据库看到导入的数据：
 
-<img src="D:\growUp\git_repository\09-poi-demo\extend\img\ReadTest03.png" alt="ReadTest03" style="zoom:80%;" />
+<img src="https://img2020.cnblogs.com/blog/1731892/202003/1731892-20200320152719395-1088281705.png" alt="ReadTest03" style="zoom:80%;" />
 
 # 使用easyexcel读写excel
 
@@ -807,4 +847,6 @@ easyexcel 封装或重写了 POI SAX 部分的 API，所以也是需要设置回
 
 [Apache POI - the Java API for Microsoft Documents]( https://poi.apache.org)
 
->本文为原创文章，转载请附上原文出处链接：https://github.com/ZhangZiSheng001/01-spi-demo
+> 相关源码请移步：[https://github.com/ZhangZiSheng001/poi-demo](https://github.com/ZhangZiSheng001/poi-demo)
+
+>本文为原创文章，转载请附上原文出处链接： [https://www.cnblogs.com/ZhangZiSheng001/p/12329937.html](https://www.cnblogs.com/ZhangZiSheng001/p/12329937.html)
