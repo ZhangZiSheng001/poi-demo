@@ -19,23 +19,23 @@ import cn.zzs.poi.UserService;
  */
 public class WriteTest {
 
-	/**
-	 * <p>批量写入用户数据到excel</p>
-	 * @throws SQLException 
-	 * @throws IOException 
-	 */
-	@Test
-	public void test01() throws SQLException, IOException {
-		// XSSF
-		String path = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data.xlsx";
+    /**
+     * <p>批量写入用户数据到excel</p>
+     * @throws SQLException 
+     * @throws IOException 
+     */
+    @Test
+    public void test01() throws SQLException, IOException {
+        // XSSF
+        String path = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data.xlsx";
 
-		// HSSF
-		// String path = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data.xls";
+        // HSSF
+        // String path = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data.xls";
 
-		// 获取用户数据
-		List<UserDTO> list = new UserService().findAll().stream().map((x) -> new UserDTO(x)).collect(Collectors.toList());
-		// 写入excel
-		EasyExcel.write(path, UserDTO.class).sheet(0).relativeHeadRowIndex(1).doWrite(list);
-	}
-	
+        // 获取用户数据
+        List<UserDTO> list = new UserService().findAll().stream().map((x) -> new UserDTO(x)).collect(Collectors.toList());
+        // 写入excel
+        EasyExcel.write(path, UserDTO.class).sheet(0).relativeHeadRowIndex(1).doWrite(list);
+    }
+
 }

@@ -22,55 +22,56 @@ import cn.zzs.poi.UserService;
  */
 public class ReadTest {
 
-	/**
-	 * <p>批量导入excel的数据到数据库--使用自定义监听器</p>
-	 * @throws SQLException 
-	 * @throws IOException 
-	 */
-	@Test
-	public void test01() throws SQLException, IOException {
-		// XSSF
-		String path = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data.xlsx";
-		
-		// HSSF
-		// String path = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data.xls";
+    /**
+     * <p>批量导入excel的数据到数据库--使用自定义监听器</p>
+     * @throws SQLException 
+     * @throws IOException 
+     */
+    @Test
+    public void test01() throws SQLException, IOException {
+        // XSSF
+        String path = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data.xlsx";
 
-		List<UserDTO> list = new ArrayList<UserDTO>();
-		
-		// 定义回调监听器
-		ReadListener<UserDTO> syncReadListener = new AnalysisEventListener<UserDTO>() {
-			@Override
-			public void invoke(UserDTO data, AnalysisContext context) {
-				list.add(data);
-			}
+        // HSSF
+        // String path = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data.xls";
 
-			@Override
-			public void doAfterAllAnalysed(AnalysisContext context) {
-				// TODO Auto-generated method stub
-				
-			}
-		};
-		// 读取excel
-		EasyExcel.read(path, UserDTO.class, syncReadListener).sheet(0).headRowNumber(2).doRead();
-		// 保存
-		new UserService().save(list);
-	}
+        List<UserDTO> list = new ArrayList<UserDTO>();
 
-	/**
-	 * <p>批量导入excel的数据到数据库--使用默认监听器</p>
-	 * @throws SQLException 
-	 * @throws IOException 
-	 */
-	@Test
-	public void test02() throws SQLException, IOException {
-		// XSSF
-		String path = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data.xlsx";
-		// HSSF
-		// String path = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data.xls";
+        // 定义回调监听器
+        ReadListener<UserDTO> syncReadListener = new AnalysisEventListener<UserDTO>() {
 
-		// 读取excel
-		List<UserDTO> list = EasyExcel.read(path).head(UserDTO.class).sheet(0).headRowNumber(2).doReadSync();
-		// 保存
-		new UserService().save(list);
-	}
+            @Override
+            public void invoke(UserDTO data, AnalysisContext context) {
+                list.add(data);
+            }
+
+            @Override
+            public void doAfterAllAnalysed(AnalysisContext context) {
+                // TODO Auto-generated method stub
+
+            }
+        };
+        // 读取excel
+        EasyExcel.read(path, UserDTO.class, syncReadListener).sheet(0).headRowNumber(2).doRead();
+        // 保存
+        new UserService().save(list);
+    }
+
+    /**
+     * <p>批量导入excel的数据到数据库--使用默认监听器</p>
+     * @throws SQLException 
+     * @throws IOException 
+     */
+    @Test
+    public void test02() throws SQLException, IOException {
+        // XSSF
+        String path = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data.xlsx";
+        // HSSF
+        // String path = "D:\\growUp\\git_repository\\09-poi-demo\\extend\\file\\user_data.xls";
+
+        // 读取excel
+        List<UserDTO> list = EasyExcel.read(path).head(UserDTO.class).sheet(0).headRowNumber(2).doReadSync();
+        // 保存
+        new UserService().save(list);
+    }
 }
