@@ -15,127 +15,127 @@ import com.alibaba.excel.annotation.write.style.ContentRowHeight;
 @ContentRowHeight(16)
 public class UserDTO implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
-	@ExcelIgnore
-	private String id;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * <p>用户名</p>
-	 */
-	@ExcelProperty(value = { "用户名" }, index = 1)
-	private String name;
+    @ExcelIgnore
+    private String id;
 
-	/**
-	 * <p>性别</p>
-	 */
-	@ExcelProperty(value = { "性别" }, index = 2)
-	private String genderStr;
+    /**
+     * <p>用户名</p>
+     */
+    @ExcelProperty(value = { "用户名" }, index = 1)
+    private String name;
 
-	/**
-	 * <p>年龄</p>
-	 */
-	@ExcelProperty(value = { "年龄" }, index = 3)
-	private Integer age;
+    /**
+     * <p>性别</p>
+     */
+    @ExcelProperty(value = { "性别" }, index = 2)
+    private String genderStr;
 
-	/**
-	 * <p>电话号码</p>
-	 */
-	@ExcelProperty(value = { "手机号" }, index = 4)
-	@ColumnWidth(14)
-	private String phone;
-	
-	@ExcelIgnore
-	private Integer gender = 0;
+    /**
+     * <p>年龄</p>
+     */
+    @ExcelProperty(value = { "年龄" }, index = 3)
+    private Integer age;
 
-	public UserDTO() {
-		super();
-	}
+    /**
+     * <p>电话号码</p>
+     */
+    @ExcelProperty(value = { "手机号" }, index = 4)
+    @ColumnWidth(14)
+    private String phone;
 
-	public UserDTO(User user) {
-		super();
-		setId(user.getId());
-		setName(user.getName());
-		setAge(user.getAge());
-		setGender(user.getGender());
-		setPhone(user.getPhone());
-	}
+    @ExcelIgnore
+    private Integer gender = 0;
 
-	public String getId() {
-		return id;
-	}
+    public UserDTO() {
+        super();
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public UserDTO(User user) {
+        super();
+        setId(user.getId());
+        setName(user.getName());
+        setAge(user.getAge());
+        setGender(user.getGender());
+        setPhone(user.getPhone());
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public Integer getGender() {
-		return gender;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setGender(Integer gender) {
-		this.gender = gender;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Integer getAge() {
-		return age;
-	}
+    public Integer getGender() {
+        return gender;
+    }
 
-	public void setAge(Integer age) {
-		this.age = age;
-	}
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public Integer getAge() {
+        return age;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public void setAge(Integer age) {
+        this.age = age;
+    }
 
-	public String getGenderStr() {
-		if(genderStr == null) {
-			if(getGender() == 0) {
-				genderStr = "男";
-			} else {
-				genderStr = "女";
-			}
-		}
-		return genderStr;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	public void setGenderStr(String genderStr) {
-		if("女".equals(genderStr)) {
-			setGender(1);
-		}
-		this.genderStr = genderStr;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("UserDTO [id=");
-		builder.append(id);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", genderStr=");
-		builder.append(genderStr);
-		builder.append(", age=");
-		builder.append(age);
-		builder.append(", phone=");
-		builder.append(phone);
-		builder.append(", gender=");
-		builder.append(gender);
-		builder.append("]");
-		return builder.toString();
-	}
-	
+    public String getGenderStr() {
+        if(genderStr == null) {
+            if(getGender() == 0) {
+                genderStr = "男";
+            } else {
+                genderStr = "女";
+            }
+        }
+        return genderStr;
+    }
+
+    public void setGenderStr(String genderStr) {
+        if("女".equals(genderStr)) {
+            setGender(1);
+        }
+        this.genderStr = genderStr;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("UserDTO [id=");
+        builder.append(id);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", genderStr=");
+        builder.append(genderStr);
+        builder.append(", age=");
+        builder.append(age);
+        builder.append(", phone=");
+        builder.append(phone);
+        builder.append(", gender=");
+        builder.append(gender);
+        builder.append("]");
+        return builder.toString();
+    }
+
 }

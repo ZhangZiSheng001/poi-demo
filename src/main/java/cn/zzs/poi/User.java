@@ -8,145 +8,128 @@ import java.util.Date;
  * @date: 2020年2月25日 上午10:01:21
  */
 public class User {
-	
-	private String id;
-	
-	/**
-	 * <p>用户名</p>
-	 */
-	private String name;
-	
-	/**
-	 * <p>性别</p>
-	 */
-	private Integer gender = 0;
-	
-	/**
-	 * <p>年龄</p>
-	 */
-	private Integer age;
-	
-	/**
-	 * <p>创建时间</p>
-	 */
-	private Date gmtCreate;
-	
-	/**
-	 * <p>最近修改时间</p>
-	 */
-	private Date gmtModified;
-	
-	/**
-	 * <p>是否删除</p>
-	 */
-	private Integer deleted = 0;
-	
-	/**
-	 * <p>电话号码</p>
-	 */
-	private String phone;
 
-	
-	public String getId() {
-		return id;
-	}
+    private String id;
 
-	
-	public void setId(String id) {
-		this.id = id;
-	}
+    /**
+     * <p>用户名</p>
+     */
+    private String name;
 
-	
-	public String getName() {
-		return name;
-	}
+    /**
+     * <p>性别</p>
+     */
+    private Integer gender = 0;
 
-	
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * <p>年龄</p>
+     */
+    private Integer age;
 
-	
-	public Integer getGender() {
-		return gender;
-	}
+    /**
+     * <p>创建时间</p>
+     */
+    private Date gmtCreate;
 
-	
-	public void setGender(Integer gender) {
-		this.gender = gender;
-	}
+    /**
+     * <p>最近修改时间</p>
+     */
+    private Date gmtModified;
 
-	
-	public Integer getAge() {
-		return age;
-	}
+    /**
+     * <p>是否删除</p>
+     */
+    private Integer deleted = 0;
 
-	
-	public void setAge(Integer age) {
-		this.age = age;
-	}
+    /**
+     * <p>电话号码</p>
+     */
+    private String phone;
 
-	
-	public Date getGmtCreate() {
-		return gmtCreate;
-	}
+    public String getId() {
+        return id;
+    }
 
-	
-	public void setGmtCreate(Date gmtCreate) {
-		this.gmtCreate = gmtCreate;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	
-	public Date getGmtModified() {
-		return gmtModified;
-	}
+    public String getName() {
+        return name;
+    }
 
-	
-	public void setGmtModified(Date gmtModified) {
-		this.gmtModified = gmtModified;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	
-	public Integer getDeleted() {
-		return deleted;
-	}
+    public Integer getGender() {
+        return gender;
+    }
 
-	
-	public void setDeleted(Integer deleted) {
-		this.deleted = deleted;
-	}
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
 
-	
-	public String getPhone() {
-		return phone;
-	}
+    public Integer getAge() {
+        return age;
+    }
 
-	
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public void setAge(Integer age) {
+        this.age = age;
+    }
 
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("User [id=");
-		builder.append(id);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", gender=");
-		builder.append(gender);
-		builder.append(", age=");
-		builder.append(age);
-		builder.append(", gmtCreate=");
-		builder.append(gmtCreate);
-		builder.append(", gmtModified=");
-		builder.append(gmtModified);
-		builder.append(", deleted=");
-		builder.append(deleted);
-		builder.append(", phone=");
-		builder.append(phone);
-		builder.append("]");
-		return builder.toString();
-	}
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public Date getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+
+    public Integer getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Integer deleted) {
+        this.deleted = deleted;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("User [id=");
+        builder.append(id);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", gender=");
+        builder.append(gender);
+        builder.append(", age=");
+        builder.append(age);
+        builder.append(", gmtCreate=");
+        builder.append(gmtCreate);
+        builder.append(", gmtModified=");
+        builder.append(gmtModified);
+        builder.append(", deleted=");
+        builder.append(deleted);
+        builder.append(", phone=");
+        builder.append(phone);
+        builder.append("]");
+        return builder.toString();
+    }
 }
