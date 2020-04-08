@@ -41,9 +41,6 @@ public class UserService {
             statement.executeUpdate();
             // 提交事务
             JDBCUtils.commit();
-        } catch(Exception e) {
-            JDBCUtils.rollback();
-            throw e;
         } finally {
             // 释放资源
             JDBCUtils.release(connection, statement, null);
@@ -81,9 +78,6 @@ public class UserService {
             statement.executeBatch();
             // 提交事务
             JDBCUtils.commit();
-        } catch(Exception e) {
-            JDBCUtils.rollback();
-            throw e;
         } finally {
             // 释放资源
             JDBCUtils.release(connection, statement, null);
