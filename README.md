@@ -55,7 +55,7 @@ OLE2 和 OOXML 本质上都是一种文件格式规范或标准，平时看到�
 
 OLE2 文件一般包括 xls、doc、ppt 等，是二进制格式的文件。 相关内容可以参考：[ 复合文档Ole对象二进制储存格式 ]( 复合文档Ole对象二进制储存格式 )。
 
-OOXML文件一般包括 xlsx、docx、pptx 等。该类文件以指定格式的 xml 为基础并以 zip 格式压缩，这里我利用解压工具解压本地的一个 xml 文件，可以看到以下文件结构，在本文例子中，我们会重点关注 sharedStrings.xml 和 sheet1.xml 的内容，因为使用 SAX API 时必须用到：
+OOXML文件一般包括 xlsx、docx、pptx 等。该类文件以指定格式的 xml 为基础并以 zip 格式压缩，这里我利用解压工具解压本地的一个  xlsx  文件，可以看到以下文件结构，在本文例子中，我们会重点关注 sharedStrings.xml 和 sheet1.xml 的内容，因为使用 SAX API 时必须用到：
 
 <img src="https://img2020.cnblogs.com/blog/1731892/202003/1731892-20200320152401357-788307119.png" alt="xlsx文件结构" style="zoom:80%;" />
 
